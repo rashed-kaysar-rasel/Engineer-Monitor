@@ -10,10 +10,13 @@ starter kit using PostgreSQL.
 - PostgreSQL is configured as the application database
 - Application dependencies are installed
 - Environment variables are configured
+- `DB_CONNECTION=pgsql` points to the target PostgreSQL database
 
 ## Setup
 
 1. Run database migrations and seed the approved roles.
+   - `php artisan migrate`
+   - `php artisan db:seed --class=RoleSeeder`
 2. Create or update one user with the `admin` role.
 3. Create or update one user with the `tech lead` role.
 4. Create or update one user with no approved role assignment.
@@ -29,6 +32,7 @@ starter kit using PostgreSQL.
 7. Confirm access is denied with a clear authorization message.
 8. Deactivate or revoke an approved role assignment.
 9. Attempt sign-in again for that user and confirm access is denied.
+10. Reassign the role and confirm the next sign-in succeeds again.
 
 ## Automated Checks
 

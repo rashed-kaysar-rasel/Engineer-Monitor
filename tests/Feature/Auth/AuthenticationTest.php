@@ -21,7 +21,7 @@ class AuthenticationTest extends TestCase
 
     public function test_users_can_authenticate_using_the_login_screen()
     {
-        $user = User::factory()->create();
+        $user = User::factory()->admin()->create();
 
         $response = $this->post(route('login.store'), [
             'email' => $user->email,
@@ -41,7 +41,7 @@ class AuthenticationTest extends TestCase
             'confirmPassword' => true,
         ]);
 
-        $user = User::factory()->create();
+        $user = User::factory()->admin()->create();
 
         $user->forceFill([
             'two_factor_secret' => encrypt('test-secret'),
@@ -61,7 +61,7 @@ class AuthenticationTest extends TestCase
 
     public function test_users_can_not_authenticate_with_invalid_password()
     {
-        $user = User::factory()->create();
+        $user = User::factory()->admin()->create();
 
         $this->post(route('login.store'), [
             'email' => $user->email,
@@ -73,7 +73,7 @@ class AuthenticationTest extends TestCase
 
     public function test_users_can_logout()
     {
-        $user = User::factory()->create();
+        $user = User::factory()->admin()->create();
 
         $response = $this->actingAs($user)->post(route('logout'));
 
@@ -83,7 +83,7 @@ class AuthenticationTest extends TestCase
 
     public function test_users_are_rate_limited()
     {
-        $user = User::factory()->create();
+        $user = User::factory()->admin()->create();
 
         RateLimiter::increment(md5('login'.implode('|', [$user->email, '127.0.0.1'])), amount: 5);
 
@@ -93,5 +93,70 @@ class AuthenticationTest extends TestCase
         ]);
 
         $response->assertTooManyRequests();
+    }
+
+    public function test_users_without_an_approved_role_can_not_authenticate_using_the_login_screen(): void
+    {
+        $user = User::factory()->withoutApprovedRole()->create();
+
+        $response = $this->from(route('login'))->post(route('login.store'), [
+            'email' => $user->email,
+            'password' => 'password',
+        ]);
+
+        $response
+            ->assertRedirect(route('login'))
+            ->assertSessionHasErrors([
+                'email' => 'Your account is not authorized for this application.',
+            ]);
+
+        $this->assertGuest();
+    }
+
+    public function test_tech_leads_can_authenticate_using_the_login_screen(): void
+    {
+        $user = User::factory()->techLead()->create();
+
+        $response = $this->post(route('login.store'), [
+            'email' => $user->email,
+            'password' => 'password',
+        ]);
+
+        $this->assertAuthenticated();
+        $response->assertRedirect(route('dashboard', absolute: false));
+    }
+
+    public function test_users_with_revoked_role_assignments_can_not_authenticate_using_the_login_screen(): void
+    {
+        $user = User::factory()->admin()->create();
+        $user->revokeActiveRole();
+
+        $response = $this->from(route('login'))->post(route('login.store'), [
+            'email' => $user->email,
+            'password' => 'password',
+        ]);
+
+        $response
+            ->assertRedirect(route('login'))
+            ->assertSessionHasErrors([
+                'email' => 'Your account is not authorized for this application.',
+            ]);
+
+        $this->assertGuest();
+    }
+
+    public function test_users_with_reactivated_role_assignments_can_authenticate_again(): void
+    {
+        $user = User::factory()->admin()->create();
+        $user->revokeActiveRole();
+        $user->assignRole('admin');
+
+        $response = $this->post(route('login.store'), [
+            'email' => $user->email,
+            'password' => 'password',
+        ]);
+
+        $this->assertAuthenticated();
+        $response->assertRedirect(route('dashboard', absolute: false));
     }
 }
