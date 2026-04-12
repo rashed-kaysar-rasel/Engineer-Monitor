@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
@@ -56,5 +57,47 @@ class UserFactory extends Factory
             'two_factor_recovery_codes' => encrypt(json_encode(['recovery-code-1'])),
             'two_factor_confirmed_at' => now(),
         ]);
+    }
+
+    /**
+     * Assign the admin role after creating the user.
+     */
+    public function admin(): static
+    {
+        return $this->afterCreating(fn (User $user) => $user->assignRole(
+            Role::query()->firstOrCreate(
+                ['slug' => 'admin'],
+                [
+                    'name' => 'Admin',
+                    'description' => 'Full internal administration access.',
+                    'is_active' => true,
+                ],
+            ),
+        ));
+    }
+
+    /**
+     * Assign the tech lead role after creating the user.
+     */
+    public function techLead(): static
+    {
+        return $this->afterCreating(fn (User $user) => $user->assignRole(
+            Role::query()->firstOrCreate(
+                ['slug' => 'tech-lead'],
+                [
+                    'name' => 'Tech Lead',
+                    'description' => 'Technical leadership access for approved internal users.',
+                    'is_active' => true,
+                ],
+            ),
+        ));
+    }
+
+    /**
+     * Keep the user without an approved role.
+     */
+    public function withoutApprovedRole(): static
+    {
+        return $this;
     }
 }

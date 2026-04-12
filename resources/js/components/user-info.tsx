@@ -1,4 +1,5 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
 import { useInitials } from '@/hooks/use-initials';
 import type { User } from '@/types';
 
@@ -21,11 +22,18 @@ export function UserInfo({
             </Avatar>
             <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-medium">{user.name}</span>
-                {showEmail && (
-                    <span className="truncate text-xs text-muted-foreground">
-                        {user.email}
-                    </span>
-                )}
+                <div className="flex items-center gap-2">
+                    {showEmail && (
+                        <span className="truncate text-xs text-muted-foreground">
+                            {user.email}
+                        </span>
+                    )}
+                    {user.role && (
+                        <Badge variant="secondary" className="capitalize">
+                            {user.role.name}
+                        </Badge>
+                    )}
+                </div>
             </div>
         </>
     );

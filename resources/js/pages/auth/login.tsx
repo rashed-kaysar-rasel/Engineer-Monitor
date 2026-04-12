@@ -1,4 +1,5 @@
 import { Form, Head } from '@inertiajs/react';
+import AlertError from '@/components/alert-error';
 import InputError from '@/components/input-error';
 import PasswordInput from '@/components/password-input';
 import TextLink from '@/components/text-link';
@@ -33,6 +34,13 @@ export default function Login({
             >
                 {({ processing, errors }) => (
                     <>
+                        {errors.email && (
+                            <AlertError
+                                title="Unable to complete sign in"
+                                errors={[errors.email]}
+                            />
+                        )}
+
                         <div className="grid gap-6">
                             <div className="grid gap-2">
                                 <Label htmlFor="email">Email address</Label>
@@ -117,5 +125,6 @@ export default function Login({
 
 Login.layout = {
     title: 'Log in to your account',
-    description: 'Enter your email and password below to log in',
+    description:
+        'Enter your email and password below to access the internal admin or tech lead workspace',
 };
