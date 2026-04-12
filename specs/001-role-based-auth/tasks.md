@@ -25,9 +25,9 @@ of each story.
 
 **Purpose**: Prepare seed and type scaffolding used across all stories
 
-- [ ] T001 Create approved role seeder in `database/seeders/RoleSeeder.php`
-- [ ] T002 Update seed entrypoints for role setup in `database/seeders/DatabaseSeeder.php`
-- [ ] T003 [P] Extend shared auth typing for role-aware pages in `resources/js/types/auth.ts` and `resources/js/types/global.d.ts`
+- [X] T001 Create approved role seeder in `database/seeders/RoleSeeder.php`
+- [X] T002 Update seed entrypoints for role setup in `database/seeders/DatabaseSeeder.php`
+- [X] T003 [P] Extend shared auth typing for role-aware pages in `resources/js/types/auth.ts` and `resources/js/types/global.d.ts`
 
 ---
 
@@ -37,14 +37,14 @@ of each story.
 
 **CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T004 Create roles table migration in `database/migrations/2026_04_12_000001_create_roles_table.php`
-- [ ] T005 Create role assignments table migration in `database/migrations/2026_04_12_000002_create_role_assignments_table.php`
-- [ ] T006 [P] Create `Role` and `RoleAssignment` models in `app/Models/Role.php` and `app/Models/RoleAssignment.php`
-- [ ] T007 Update user role relationships and active-role helpers in `app/Models/User.php`
-- [ ] T008 Implement role access lookup service in `app/Services/Auth/RoleAccessService.php`
-- [ ] T009 Register active-role middleware in `app/Http/Middleware/EnsureUserHasActiveRole.php` and `bootstrap/app.php`
-- [ ] T010 [P] Add role-aware factory states in `database/factories/UserFactory.php`
-- [ ] T011 [P] Share eager-loaded role data with Inertia in `app/Http/Middleware/HandleInertiaRequests.php`
+- [X] T004 Create roles table migration in `database/migrations/2026_04_12_000001_create_roles_table.php`
+- [X] T005 Create role assignments table migration in `database/migrations/2026_04_12_000002_create_role_assignments_table.php`
+- [X] T006 [P] Create `Role` and `RoleAssignment` models in `app/Models/Role.php` and `app/Models/RoleAssignment.php`
+- [X] T007 Update user role relationships and active-role helpers in `app/Models/User.php`
+- [X] T008 Implement role access lookup service in `app/Services/Auth/RoleAccessService.php`
+- [X] T009 Register active-role middleware in `app/Http/Middleware/EnsureUserHasActiveRole.php` and `bootstrap/app.php`
+- [X] T010 [P] Add role-aware factory states in `database/factories/UserFactory.php`
+- [X] T011 [P] Share eager-loaded role data with Inertia in `app/Http/Middleware/HandleInertiaRequests.php`
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
@@ -60,15 +60,15 @@ of each story.
 
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
-- [ ] T012 [P] [US1] Add admin login success and unauthorized denial tests in `tests/Feature/Auth/AuthenticationTest.php`
-- [ ] T013 [P] [US1] Add protected dashboard access tests for approved and unassigned users in `tests/Feature/DashboardTest.php`
+- [X] T012 [P] [US1] Add admin login success and unauthorized denial tests in `tests/Feature/Auth/AuthenticationTest.php`
+- [X] T013 [P] [US1] Add protected dashboard access tests for approved and unassigned users in `tests/Feature/DashboardTest.php`
 
 ### Implementation for User Story 1
 
-- [ ] T014 [US1] Enforce approved-role login eligibility in `app/Providers/FortifyServiceProvider.php`
-- [ ] T015 [US1] Return clear unauthorized login messaging in `app/Providers/FortifyServiceProvider.php` and `resources/js/pages/auth/login.tsx`
-- [ ] T016 [US1] Require active approved roles on protected web routes in `routes/web.php` and `app/Http/Middleware/EnsureUserHasActiveRole.php`
-- [ ] T017 [US1] Surface admin role identity in authenticated UI in `resources/js/pages/dashboard.tsx` and `resources/js/components/nav-user.tsx`
+- [X] T014 [US1] Enforce approved-role login eligibility in `app/Providers/FortifyServiceProvider.php`
+- [X] T015 [US1] Return clear unauthorized login messaging in `app/Providers/FortifyServiceProvider.php` and `resources/js/pages/auth/login.tsx`
+- [X] T016 [US1] Require active approved roles on protected web routes in `routes/web.php` and `app/Http/Middleware/EnsureUserHasActiveRole.php`
+- [X] T017 [US1] Surface admin role identity in authenticated UI in `resources/js/pages/dashboard.tsx` and `resources/js/components/nav-user.tsx`
 
 **Checkpoint**: At this point, User Story 1 should be fully functional and testable independently
 
@@ -82,14 +82,14 @@ of each story.
 
 ### Tests for User Story 2
 
-- [ ] T018 [P] [US2] Add tech lead login and missing-assignment tests in `tests/Feature/Auth/AuthenticationTest.php`
-- [ ] T019 [P] [US2] Add shared auth payload assertions for tech lead users in `tests/Feature/DashboardTest.php`
+- [X] T018 [P] [US2] Add tech lead login and missing-assignment tests in `tests/Feature/Auth/AuthenticationTest.php`
+- [X] T019 [P] [US2] Add shared auth payload assertions for tech lead users in `tests/Feature/DashboardTest.php`
 
 ### Implementation for User Story 2
 
-- [ ] T020 [US2] Recognize tech lead assignments in the access service and shared auth payload in `app/Services/Auth/RoleAccessService.php` and `app/Http/Middleware/HandleInertiaRequests.php`
-- [ ] T021 [US2] Render tech lead authorization states in `resources/js/pages/auth/login.tsx` and `resources/js/components/user-info.tsx`
-- [ ] T022 [US2] Add role-aware dashboard and navigation presentation for tech leads in `resources/js/pages/dashboard.tsx` and `resources/js/components/nav-user.tsx`
+- [X] T020 [US2] Recognize tech lead assignments in the access service and shared auth payload in `app/Services/Auth/RoleAccessService.php` and `app/Http/Middleware/HandleInertiaRequests.php`
+- [X] T021 [US2] Render tech lead authorization states in `resources/js/pages/auth/login.tsx` and `resources/js/components/user-info.tsx`
+- [X] T022 [US2] Add role-aware dashboard and navigation presentation for tech leads in `resources/js/pages/dashboard.tsx` and `resources/js/components/nav-user.tsx`
 
 **Checkpoint**: At this point, User Stories 1 AND 2 should both work independently
 
@@ -103,14 +103,14 @@ of each story.
 
 ### Tests for User Story 3
 
-- [ ] T023 [P] [US3] Add role assignment activation and revocation login tests in `tests/Feature/Auth/AuthenticationTest.php`
-- [ ] T024 [P] [US3] Add role relationship and single-active-assignment tests in `tests/Unit/Models/RoleAssignmentTest.php`
+- [X] T023 [P] [US3] Add role assignment activation and revocation login tests in `tests/Feature/Auth/AuthenticationTest.php`
+- [X] T024 [P] [US3] Add role relationship and single-active-assignment tests in `tests/Unit/Models/RoleAssignmentTest.php`
 
 ### Implementation for User Story 3
 
-- [ ] T025 [US3] Enforce single active assignment and revocation rules in `app/Models/RoleAssignment.php` and `database/migrations/2026_04_12_000002_create_role_assignments_table.php`
-- [ ] T026 [US3] Add role authorization helpers for protected application areas in `app/Models/User.php` and `app/Providers/AppServiceProvider.php`
-- [ ] T027 [US3] Persist approved role setup and assignment lifecycle support in `database/seeders/RoleSeeder.php`, `database/factories/UserFactory.php`, and `app/Services/Auth/RoleAccessService.php`
+- [X] T025 [US3] Enforce single active assignment and revocation rules in `app/Models/RoleAssignment.php` and `database/migrations/2026_04_12_000002_create_role_assignments_table.php`
+- [X] T026 [US3] Add role authorization helpers for protected application areas in `app/Models/User.php` and `app/Providers/AppServiceProvider.php`
+- [X] T027 [US3] Persist approved role setup and assignment lifecycle support in `database/seeders/RoleSeeder.php`, `database/factories/UserFactory.php`, and `app/Services/Auth/RoleAccessService.php`
 
 **Checkpoint**: All user stories should now be independently functional
 
@@ -120,9 +120,9 @@ of each story.
 
 **Purpose**: Finalize verification, documentation, and performance/security checks across the feature
 
-- [ ] T028 [P] Document PostgreSQL setup and role verification steps in `specs/001-role-based-auth/quickstart.md`
-- [ ] T029 Review eager loading and query paths for auth role access in `app/Models/User.php`, `app/Services/Auth/RoleAccessService.php`, and `app/Http/Middleware/HandleInertiaRequests.php`
-- [ ] T030 Run full validation and address regressions in `tests/Feature/Auth/AuthenticationTest.php`, `tests/Feature/DashboardTest.php`, `tests/Unit/Models/RoleAssignmentTest.php`, `resources/js/pages/auth/login.tsx`, and `resources/js/types/auth.ts`
+- [X] T028 [P] Document PostgreSQL setup and role verification steps in `specs/001-role-based-auth/quickstart.md`
+- [X] T029 Review eager loading and query paths for auth role access in `app/Models/User.php`, `app/Services/Auth/RoleAccessService.php`, and `app/Http/Middleware/HandleInertiaRequests.php`
+- [X] T030 Run full validation and address regressions in `tests/Feature/Auth/AuthenticationTest.php`, `tests/Feature/DashboardTest.php`, `tests/Unit/Models/RoleAssignmentTest.php`, `resources/js/pages/auth/login.tsx`, and `resources/js/types/auth.ts`
 
 ---
 
