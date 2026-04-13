@@ -27,22 +27,27 @@
 **Performance Goals**: [domain-specific, e.g., <200ms p95 list loads, bounded query counts or NEEDS CLARIFICATION]  
 **Constraints**: [domain-specific, e.g., secure by default, no N+1 queries, responsive across breakpoints]  
 **Scale/Scope**: [domain-specific, e.g., 10k users, admin dashboard, multi-role operations]
+**Authorization Model**: [e.g., admin inherits all techlead capabilities; list admin-only actions]
 
 ## Constitution Check
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
 - `Secure-by-Default Backend`: Identify authentication, authorization, validation, secret
-  handling, and audit/logging impacts. Document the Laravel mechanism that enforces each one.
+  handling, and audit/logging impacts. Document the Laravel mechanism that enforces each one,
+  including how admin and techlead access differ.
 - `Query-Efficient Data Access`: Describe the expected query shape for lists, dashboards, and
   related-model access. State how N+1 risks are prevented and how large result sets are bounded.
 - `Contract-Driven Full-Stack Delivery`: List the backend contract changes and the corresponding
-  React/Inertia pages, components, or props affected by the change.
+  React/Inertia pages, components, or props affected by the change. Include a role-access matrix
+  when any capability differs between admin and techlead.
 - `Responsive and Accessible Frontend`: State the target breakpoints, interaction modes, and
-  loading/error/empty states that must be verified.
+  loading/error/empty states that must be verified, including how unavailable privileged actions
+  are hidden or disabled for techlead users.
 - `Quality Gates and Operational Readiness`: List the automated and manual checks required for the
   feature, including tests, linting, type checks, and any targeted security or performance
-  validation.
+  validation. Explicitly include verification that techlead cannot perform admin-only actions and
+  that admin retains inherited techlead access.
 
 ## Project Structure
 

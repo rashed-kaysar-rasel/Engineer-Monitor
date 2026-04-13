@@ -76,6 +76,8 @@
 - How does system handle [error scenario]?
 - How does the feature behave when authorization fails, input is invalid, or required related
   records are missing?
+- Which actions are available to both `admin` and `techlead`, and which actions are restricted to
+  `admin` only?
 - What happens when a page contains large datasets, nested relationships, or slow network
   responses?
 - How does the UI adapt on small screens and keyboard-only interaction paths?
@@ -96,6 +98,8 @@
 - **FR-005**: System MUST [behavior, e.g., "log all security events"]
 - **FR-006**: System MUST define how authorization and input validation are enforced for each
   privileged or data-mutating action.
+- **FR-006a**: System MUST define the role-access matrix for `admin` and `techlead`, including
+  which capabilities are shared and which capabilities are `admin`-only.
 - **FR-007**: System MUST define how related data is loaded without introducing N+1 queries or
   unbounded reads.
 - **FR-008**: System MUST define responsive behavior for primary screens, including loading,
@@ -139,5 +143,6 @@
 - [Assumption about scope boundaries, e.g., "Mobile support is out of scope for v1"]
 - [Assumption about data/environment, e.g., "Existing authentication system will be reused"]
 - [Dependency on existing system/service, e.g., "Requires access to the existing user profile API"]
-- [Assumption about authorization model, e.g., "Existing Laravel policies and roles will be reused"]
+- [Assumption about authorization model, e.g., "The system uses `admin` and `techlead`, where
+  admin inherits every techlead capability and techlead lacks admin-only access"]
 - [Assumption about data volume, e.g., "Primary list views remain paginated and do not require bulk export in v1"]

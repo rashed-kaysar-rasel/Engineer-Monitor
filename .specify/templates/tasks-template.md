@@ -10,7 +10,7 @@ description: "Task list template for feature implementation"
 data-model.md, contracts/
 
 **Tests**: Include tests whenever a story changes behavior, security, authorization, data
-loading, or user-critical UI states.
+loading, role access, or user-critical UI states.
 
 **Organization**: Tasks are grouped by user story to enable independent implementation and
 testing of each story.
@@ -67,6 +67,7 @@ Examples of foundational tasks (adjust based on your project):
 
 - [ ] T004 Setup database schema and migrations framework
 - [ ] T005 [P] Implement authentication and authorization framework
+- [ ] T005a [P] Define admin vs techlead policy/gate matrix for shared and admin-only capabilities
 - [ ] T006 [P] Setup routing, middleware, and request validation structure
 - [ ] T007 Create base models/entities that all stories depend on
 - [ ] T008 Configure error handling and logging infrastructure
@@ -90,6 +91,8 @@ Examples of foundational tasks (adjust based on your project):
 
 - [ ] T012 [P] [US1] Contract or feature test for [endpoint/flow] in the appropriate test suite
 - [ ] T013 [P] [US1] Authorization, validation, or query-behavior test for the story's risk area
+- [ ] T013a [P] [US1] Role-access test proving techlead is denied admin-only actions while admin
+  retains inherited techlead access
 
 ### Implementation for User Story 1
 
@@ -114,6 +117,7 @@ Examples of foundational tasks (adjust based on your project):
 
 - [ ] T018 [P] [US2] Contract or feature test for [endpoint/flow] in the appropriate test suite
 - [ ] T019 [P] [US2] Authorization, validation, query-behavior, or responsive-state test
+- [ ] T019a [P] [US2] Role-access or UI-visibility test for admin-only vs shared capabilities
 
 ### Implementation for User Story 2
 
@@ -139,6 +143,7 @@ Examples of foundational tasks (adjust based on your project):
 
 - [ ] T024 [P] [US3] Contract or feature test for [endpoint/flow] in the appropriate test suite
 - [ ] T025 [P] [US3] Authorization, validation, query-behavior, or responsive-state test
+- [ ] T025a [P] [US3] Role-access or UI-visibility test for admin-only vs shared capabilities
 
 ### Implementation for User Story 3
 
@@ -165,6 +170,8 @@ Examples of foundational tasks (adjust based on your project):
 - [ ] TXXX Performance optimization across all stories
 - [ ] TXXX [P] Additional unit tests in tests/unit/
 - [ ] TXXX Security hardening
+- [ ] TXXX [P] Role hierarchy regression verification for admin inheritance and techlead
+  restrictions
 - [ ] TXXX Query inspection and regression verification for high-traffic paths
 - [ ] TXXX Responsive and accessibility regression verification
 - [ ] TXXX Run quickstart.md validation
@@ -259,7 +266,8 @@ With multiple developers:
 - [Story] label maps task to specific user story for traceability
 - Each user story should be independently completable and testable
 - Verify tests fail before implementing
-- Verify security posture, query behavior, and responsive behavior before closing a story
+- Verify security posture, role hierarchy enforcement, query behavior, and responsive behavior
+  before closing a story
 - Commit after each task or logical group
 - Stop at any checkpoint to validate story independently
 - Avoid: vague tasks, same file conflicts, cross-story dependencies that break independence

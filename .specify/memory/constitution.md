@@ -1,15 +1,11 @@
 <!--
 Sync Impact Report
-Version change: template -> 1.0.0
+Version change: 1.0.0 -> 1.1.0
 Modified principles:
-- Template Principle 1 -> I. Secure-by-Default Backend
-- Template Principle 2 -> II. Query-Efficient Data Access
-- Template Principle 3 -> III. Contract-Driven Full-Stack Delivery
-- Template Principle 4 -> IV. Responsive and Accessible Frontend
-- Template Principle 5 -> V. Quality Gates and Operational Readiness
+- I. Secure-by-Default Backend -> I. Secure-by-Default Backend and Least-Privilege Access
+- III. Contract-Driven Full-Stack Delivery -> III. Contract-Driven Full-Stack Delivery and Role Visibility
 Added sections:
-- Engineering Standards
-- Delivery Workflow
+- None
 Removed sections:
 - None
 Templates requiring updates:
@@ -25,14 +21,17 @@ Follow-up TODOs:
 
 ## Core Principles
 
-### I. Secure-by-Default Backend
+### I. Secure-by-Default Backend and Least-Privilege Access
 Every backend change MUST preserve Laravel security defaults unless a reviewed exception is
 documented in the implementation plan. Authentication, authorization, validation, CSRF
 protection, mass-assignment protection, secret handling, and audit-relevant logging MUST be
 addressed explicitly for every feature that touches protected data or privileged actions.
 Controllers MUST delegate business rules to focused services, policies, actions, or query
-layers rather than embedding unchecked logic inline. Rationale: web application security is a
-baseline quality attribute, not a polish step.
+layers rather than embedding unchecked logic inline. Access control MUST follow least privilege:
+`admin` inherits every `techlead` capability, while `techlead` MUST NOT receive admin-only
+capabilities unless the constitution itself is amended. Every privileged action MUST declare
+which role can perform it and which enforcement point implements that rule. Rationale: web
+application security is a baseline quality attribute, not a polish step.
 
 ### II. Query-Efficient Data Access
 Backend data access MUST be designed to prevent N+1 queries and avoid unbounded reads. Laravel
@@ -42,13 +41,16 @@ feature that loads related records, dashboards, or lists MUST document expected 
 validate that query count and latency remain acceptable for the stated scope. Rationale:
 predictable query behavior prevents avoidable latency, cost, and production instability.
 
-### III. Contract-Driven Full-Stack Delivery
+### III. Contract-Driven Full-Stack Delivery and Role Visibility
 Every feature MUST define the user-facing scenario, the backend contract, and the frontend data
 consumption path before implementation begins. Laravel routes, requests, resources, policies,
 and React/Inertia pages or components MUST evolve together so that validation, authorization,
 and rendered state stay consistent. New ambiguity in payload shape, field meaning, or error
-handling MUST be resolved in the spec or plan rather than deferred to implementation. Rationale:
-React and Laravel changes fail together when contracts are implicit.
+handling MUST be resolved in the spec or plan rather than deferred to implementation. Where a
+feature differs by role, the spec and plan MUST include a role-access matrix that distinguishes
+shared `admin`/`techlead` capabilities from `admin`-only capabilities, and the UI MUST avoid
+presenting unavailable actions to `techlead` users. Rationale: React and Laravel changes fail
+together when contracts are implicit, and role confusion creates security defects.
 
 ### IV. Responsive and Accessible Frontend
 Frontend work MUST function across supported mobile and desktop breakpoints without horizontal
@@ -74,6 +76,9 @@ practice is enforced by repeatable gates, not intent alone.
   Policies/Gates for authorization, Eloquent scopes or dedicated query objects for complex data
   retrieval, API resources or typed props for response shaping, and queued work for long-running
   operations.
+- The baseline authorization model for this repository is two roles: `admin` and `techlead`.
+  `admin` MUST be authorized for every capability granted to `techlead`, and any `admin`-only
+  capability MUST be named explicitly in the relevant specification, plan, policy, and tests.
 - Queries that back tables, dashboards, exports, or nested relationships MUST avoid `select *`
   when narrower selects are viable and MUST paginate, chunk, or stream where result size can
   grow materially.
@@ -89,13 +94,17 @@ practice is enforced by repeatable gates, not intent alone.
 
 - Specifications MUST describe user stories, edge cases, security considerations, data-loading
   expectations, and measurable outcomes for performance or responsiveness when relevant.
+- Specifications for privileged workflows MUST include a role-access matrix covering `admin`,
+  `techlead`, shared capabilities, and admin-only capabilities.
 - Implementation plans MUST include a Constitution Check covering backend security posture,
-  anti-N+1 strategy, contract changes, responsive behavior, and verification steps.
+  anti-N+1 strategy, contract changes, role hierarchy enforcement, responsive behavior, and
+  verification steps.
 - Tasks MUST include work for backend safeguards, query-performance validation, frontend
-  responsiveness, and the automated/manual checks needed to prove the story is complete.
+  responsiveness, role/policy enforcement, and the automated/manual checks needed to prove the
+  story is complete.
 - Code review MUST reject changes that introduce hidden authorization paths, unresolved N+1
-  risks, undocumented payload changes, inaccessible interactions, or unverified responsive
-  regressions.
+  risks, undocumented payload changes, role leaks between `admin` and `techlead`, inaccessible
+  interactions, or unverified responsive regressions.
 - Release-ready work MUST leave the repository in a state where `composer test`, project linting,
   formatting checks, and relevant frontend type checks can be executed successfully.
 
@@ -121,6 +130,8 @@ Compliance review expectations:
   being requested.
 - Every implementation and review MUST verify security, query behavior, contract consistency, and
   responsive behavior for the touched scope.
+- Every privileged feature MUST verify that `techlead` cannot access admin-only capabilities and
+  that `admin` retains access to all `techlead` capabilities.
 - Unresolved constitution violations MUST block merge until corrected or formally excepted.
 
-**Version**: 1.0.0 | **Ratified**: 2026-04-11 | **Last Amended**: 2026-04-11
+**Version**: 1.1.0 | **Ratified**: 2026-04-11 | **Last Amended**: 2026-04-14
