@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Developer;
 use App\Models\User;
+use App\Policies\DeveloperPolicy;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
@@ -39,6 +41,7 @@ class AppServiceProvider extends ServiceProvider
             app()->isProduction(),
         );
 
+        Gate::policy(Developer::class, DeveloperPolicy::class);
         Gate::define('access-admin-area', fn (User $user): bool => $user->hasRole('admin'));
         Gate::define('access-tech-lead-area', fn (User $user): bool => $user->hasRole('tech-lead'));
 
