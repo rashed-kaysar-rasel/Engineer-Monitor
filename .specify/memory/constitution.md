@@ -89,6 +89,8 @@ practice is enforced by repeatable gates, not intent alone.
   and MUST account for validation errors, slow network states, and empty datasets.
 - New dependencies, architectural layers, or abstractions MUST be justified in the plan when
   they increase operational or maintenance cost.
+- Code should be written in service orented pattern. Must be focus on function reusiblity and keeping controllers as clean as possible.
+
 
 ## Delivery Workflow
 

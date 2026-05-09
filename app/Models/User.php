@@ -117,4 +117,20 @@ class User extends Authenticatable
 
         return $this->activeRoleAssignment?->role;
     }
+
+    /**
+     * Get the projects where the user is the project lead.
+     */
+    public function leadProjects(): HasMany
+    {
+        return $this->hasMany(Project::class, 'project_lead_id');
+    }
+
+    /**
+     * Get the projects created by the user.
+     */
+    public function createdProjects(): HasMany
+    {
+        return $this->hasMany(Project::class, 'creator_id');
+    }
 }

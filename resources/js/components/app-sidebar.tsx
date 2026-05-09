@@ -1,5 +1,5 @@
 import { Link, usePage } from '@inertiajs/react';
-import { BookOpen, FolderGit2, LayoutGrid, Users } from 'lucide-react';
+import { BookOpen, Briefcase, FolderGit2, LayoutGrid, Users } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
@@ -15,6 +15,7 @@ import {
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
 import { index as developers } from '@/routes/developers';
+import { index as projects } from '@/routes/projects';
 import type { Auth, NavItem } from '@/types';
 
 const footerNavItems: NavItem[] = [
@@ -47,6 +48,11 @@ export function AppSidebar() {
                       title: 'Developers',
                       href: developers(),
                       icon: Users,
+                  },
+                  {
+                      title: 'Projects',
+                      href: projects(),
+                      icon: Briefcase,
                   },
               ]
             : []),
