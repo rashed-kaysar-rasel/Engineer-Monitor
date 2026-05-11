@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DeveloperController;
+use App\Http\Controllers\FeatureShipmentController;
 use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
@@ -14,6 +15,8 @@ Route::middleware(['auth', 'verified', 'active-role'])->group(function () {
     Route::resource('developers', DeveloperController::class)
         ->only(['index', 'store', 'update', 'destroy']);
     Route::resource('projects', ProjectController::class)
+        ->only(['index', 'store', 'update', 'destroy']);
+    Route::resource('feature-shipments', FeatureShipmentController::class)
         ->only(['index', 'store', 'update', 'destroy']);
 });
 

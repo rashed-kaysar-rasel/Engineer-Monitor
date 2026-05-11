@@ -14,9 +14,7 @@ use Inertia\Response;
 
 class ProjectController extends Controller
 {
-    public function __construct(protected ProjectService $projectService)
-    {
-    }
+    public function __construct(protected ProjectService $projectService) {}
 
     public function index(): Response
     {

@@ -28,6 +28,12 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->configureDefaults();
+
+        if (!config('ai.verify_ssl', true)) {
+            \Illuminate\Support\Facades\Http::globalOptions([
+                'verify' => false,
+            ]);
+        }
     }
 
     /**
