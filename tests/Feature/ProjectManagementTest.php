@@ -15,7 +15,7 @@ class ProjectManagementTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         $this->adminRole = Role::factory()->create(['slug' => 'admin']);
         $this->techleadRole = Role::factory()->create(['slug' => 'tech-lead']);
         $this->userRole = Role::factory()->create(['slug' => 'user']);

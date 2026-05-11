@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Models\Project;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -15,7 +14,7 @@ class ProjectCreationTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         $this->adminRole = Role::factory()->create(['slug' => 'admin']);
         $this->techleadRole = Role::factory()->create(['slug' => 'tech-lead']);
         $this->userRole = Role::factory()->create(['slug' => 'user']);
