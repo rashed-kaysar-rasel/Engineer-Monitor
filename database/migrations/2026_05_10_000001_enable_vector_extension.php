@@ -7,7 +7,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        // Vector extension skipped. Using JSON column for embeddings via Laravel SDK fallback.
+        DB::statement('CREATE EXTENSION IF NOT EXISTS vector');
     }
 
     public function down(): void

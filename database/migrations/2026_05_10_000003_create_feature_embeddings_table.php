@@ -19,7 +19,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('feature_shipment_id')->constrained('feature_shipments')->cascadeOnDelete();
             $table->text('feature_description');
-            $table->vector('embedding', dimensions: 1536)->nullable();
+            $table->vector('embedding', dimensions: 3072)->nullable();
             $table->timestamps();
         });
     }

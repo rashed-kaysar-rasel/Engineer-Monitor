@@ -16,7 +16,7 @@ class EmbeddingGenerationTest extends TestCase
     public function test_saving_shipment_generates_embeddings_synchronously()
     {
         \Laravel\Ai\Embeddings::fake([
-            [array_fill(0, 1536, 0.1)]
+            [array_fill(0, 3072, 0.1)]
         ]);
 
         $adminRole = Role::factory()->create(['slug' => 'admin']);
@@ -52,7 +52,7 @@ class EmbeddingGenerationTest extends TestCase
     public function test_job_generates_embeddings()
     {
         \Laravel\Ai\Embeddings::fake([
-            [array_fill(0, 1536, 0.1)]
+            [array_fill(0, 3072, 0.1)]
         ]);
 
         $project = Project::factory()->create();
