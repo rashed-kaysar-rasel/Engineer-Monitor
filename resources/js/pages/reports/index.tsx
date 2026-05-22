@@ -75,6 +75,8 @@ interface VelocityCompare {
 interface ReportProps {
     mode: 'single' | 'compare';
     period: 'weekly' | 'monthly' | 'quarterly' | 'custom';
+    year: number;
+    quarter: number;
     dates: PeriodDates;
     metrics: {
         bugs: MetricCompare<BugsBreakdown>;
@@ -84,9 +86,11 @@ interface ReportProps {
     };
 }
 
-export default function ReportsIndex({ mode: initialMode, period: initialPeriod, dates, metrics }: ReportProps) {
+export default function ReportsIndex({ mode: initialMode, period: initialPeriod, year, quarter, dates, metrics }: ReportProps) {
     const [mode, setMode] = useState<'single' | 'compare'>(initialMode);
     const [period, setPeriod] = useState<'weekly' | 'monthly' | 'quarterly' | 'custom'>(initialPeriod);
+    const [selectedYear, setSelectedYear] = useState<number>(year);
+    const [selectedQuarter, setSelectedQuarter] = useState<number>(quarter);
 
     // Date range inputs
     const [startDate, setStartDate] = useState(dates.period_b.start);
@@ -100,6 +104,8 @@ export default function ReportsIndex({ mode: initialMode, period: initialPeriod,
             {
                 mode,
                 period,
+                year: period === 'quarterly' ? selectedYear : undefined,
+                quarter: period === 'quarterly' ? selectedQuarter : undefined,
                 start_date: period === 'custom' ? startDate : undefined,
                 end_date: period === 'custom' ? endDate : undefined,
                 compare_start_date: mode === 'compare' && period === 'custom' ? compareStartDate : undefined,
@@ -114,6 +120,8 @@ export default function ReportsIndex({ mode: initialMode, period: initialPeriod,
     const handleReset = () => {
         setMode('single');
         setPeriod('monthly');
+        setSelectedYear(new Date().getFullYear());
+        setSelectedQuarter(Math.floor(new Date().getMonth() / 3) + 1);
         router.get('/reports', { mode: 'single', period: 'monthly' });
     };
 
@@ -199,6 +207,39 @@ export default function ReportsIndex({ mode: initialMode, period: initialPeriod,
                                     </SelectContent>
                                 </Select>
                             </div>
+
+                            {/* Quarterly Year and Quarter selectors */}
+                            {period === 'quarterly' && (
+                                <>
+                                    <div className="space-y-2">
+                                        <label className="text-xs font-semibold text-muted-foreground">Select Year</label>
+                                        <Select value={String(selectedYear)} onValueChange={(val) => setSelectedYear(Number(val))}>
+                                            <SelectTrigger className="w-full">
+                                                <SelectValue placeholder="Year" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                {[2024, 2025, 2026, 2027, 2028].map((y) => (
+                                                    <SelectItem key={y} value={String(y)}>{y}</SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label className="text-xs font-semibold text-muted-foreground">Select Quarter</label>
+                                        <Select value={String(selectedQuarter)} onValueChange={(val) => setSelectedQuarter(Number(val))}>
+                                            <SelectTrigger className="w-full">
+                                                <SelectValue placeholder="Quarter" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectItem value="1">Q1 (Jan - Mar)</SelectItem>
+                                                <SelectItem value="2">Q2 (Apr - Jun)</SelectItem>
+                                                <SelectItem value="3">Q3 (Jul - Sep)</SelectItem>
+                                                <SelectItem value="4">Q4 (Oct - Dec)</SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
+                                </>
+                            )}
 
                             {/* Period B Custom Range */}
                             {period === 'custom' && (

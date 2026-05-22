@@ -12,7 +12,7 @@ class ReportService
     /**
      * Resolve start and end dates for Period A and Period B based on preset or custom parameters.
      */
-    public function resolvePeriodDates(string $period, ?string $start = null, ?string $end = null, ?string $compareStart = null, ?string $compareEnd = null): array
+    public function resolvePeriodDates(string $period, ?string $start = null, ?string $end = null, ?string $compareStart = null, ?string $compareEnd = null, ?int $year = null, ?int $quarter = null): array
     {
         if ($period === 'weekly') {
             $periodB_start = now()->startOfWeek()->toDateString();
@@ -27,11 +27,17 @@ class ReportService
             $periodA_start = now()->subMonth()->startOfMonth()->toDateString();
             $periodA_end = now()->subMonth()->endOfMonth()->toDateString();
         } elseif ($period === 'quarterly') {
-            $periodB_start = now()->startOfQuarter()->toDateString();
-            $periodB_end = now()->endOfQuarter()->toDateString();
+            $y = $year ?? now()->year;
+            $q = $quarter ?? now()->quarter;
+
+            $dateB = Carbon::create($y, ($q - 1) * 3 + 1, 1);
             
-            $periodA_start = now()->subQuarter()->startOfQuarter()->toDateString();
-            $periodA_end = now()->subQuarter()->endOfQuarter()->toDateString();
+            $periodB_start = $dateB->copy()->startOfQuarter()->toDateString();
+            $periodB_end = $dateB->copy()->endOfQuarter()->toDateString();
+            
+            $dateA = $dateB->copy()->subQuarter();
+            $periodA_start = $dateA->copy()->startOfQuarter()->toDateString();
+            $periodA_end = $dateA->copy()->endOfQuarter()->toDateString();
         } else {
             // custom range
             $periodB_start = $start ?? now()->startOfMonth()->toDateString();

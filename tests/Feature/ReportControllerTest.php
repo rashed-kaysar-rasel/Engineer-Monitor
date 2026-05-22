@@ -210,4 +210,32 @@ class ReportControllerTest extends TestCase
 
         \Carbon\Carbon::setTestNow();
     }
+
+    public function test_reports_accepts_custom_year_and_quarter()
+    {
+        $response = $this->actingAs($this->techlead)
+            ->get(route('reports', [
+                'mode' => 'single',
+                'period' => 'quarterly',
+                'year' => 2025,
+                'quarter' => 3,
+            ]));
+
+        $response->assertStatus(200);
+        $response->assertInertia(function ($page) {
+            $this->assertEquals('quarterly', $page->toArray()['props']['period']);
+            $this->assertEquals(2025, $page->toArray()['props']['year']);
+            $this->assertEquals(3, $page->toArray()['props']['quarter']);
+            
+            $dates = $page->toArray()['props']['dates'];
+            
+            // Q3 2025: Jul 1 to Sep 30
+            $this->assertEquals('2025-07-01', $dates['period_b']['start']);
+            $this->assertEquals('2025-09-30', $dates['period_b']['end']);
+            
+            // Q2 2025: Apr 1 to Jun 30
+            $this->assertEquals('2025-04-01', $dates['period_a']['start']);
+            $this->assertEquals('2025-06-30', $dates['period_a']['end']);
+        });
+    }
 }

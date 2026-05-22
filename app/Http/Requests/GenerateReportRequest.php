@@ -27,6 +27,8 @@ class GenerateReportRequest extends FormRequest
             'end_date' => 'nullable|date|after_or_equal:start_date|required_if:period,custom',
             'compare_start_date' => 'nullable|date',
             'compare_end_date' => 'nullable|date|after_or_equal:compare_start_date',
+            'year' => 'nullable|integer|min:2000|max:2100',
+            'quarter' => 'nullable|integer|in:1,2,3,4',
         ];
     }
 }

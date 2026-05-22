@@ -30,13 +30,17 @@ class ReportController extends Controller
         $endDate = $request->input('end_date');
         $compareStartDate = $request->input('compare_start_date');
         $compareEndDate = $request->input('compare_end_date');
+        $year = $request->input('year');
+        $quarter = $request->input('quarter');
 
         $resolvedDates = $this->reportService->resolvePeriodDates(
             $period,
             $startDate,
             $endDate,
             $compareStartDate,
-            $compareEndDate
+            $compareEndDate,
+            $year ? (int) $year : null,
+            $quarter ? (int) $quarter : null
         );
 
         $periodA = $resolvedDates['period_a'];
@@ -89,6 +93,8 @@ class ReportController extends Controller
         return Inertia::render('reports/index', [
             'mode' => $mode,
             'period' => $period,
+            'year' => $year ? (int) $year : (int) now()->year,
+            'quarter' => $quarter ? (int) $quarter : (int) now()->quarter,
             'dates' => $resolvedDates,
             'metrics' => $metrics,
         ]);
