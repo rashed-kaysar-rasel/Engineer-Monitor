@@ -1,10 +1,10 @@
 import { useForm } from '@inertiajs/react';
+import { useEffect } from 'react';
 import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Textarea } from '@/components/ui/textarea';
-import { useEffect } from 'react';
 
 interface User {
     id: number;
@@ -66,7 +66,10 @@ export default function EditFeatureShipmentModal({ shipment, developers, approve
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        if (!shipment) return;
+
+        if (!shipment) {
+return;
+}
         
         put(`/feature-shipments/${shipment.id}`, {
             onSuccess: () => {
@@ -81,6 +84,7 @@ export default function EditFeatureShipmentModal({ shipment, developers, approve
             reset();
             clearErrors();
         }
+
         onOpenChange(newOpen);
     };
 

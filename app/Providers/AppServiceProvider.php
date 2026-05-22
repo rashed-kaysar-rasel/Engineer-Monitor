@@ -48,6 +48,7 @@ class AppServiceProvider extends ServiceProvider
         );
 
         Gate::policy(Developer::class, DeveloperPolicy::class);
+        Gate::policy(\App\Models\ClientComplaint::class, \App\Policies\ClientComplaintPolicy::class);
         Gate::define('access-admin-area', fn (User $user): bool => $user->hasRole('admin'));
         Gate::define('access-tech-lead-area', fn (User $user): bool => $user->hasRole('tech-lead'));
 
