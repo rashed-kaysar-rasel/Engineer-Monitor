@@ -17,7 +17,7 @@
 
 **Purpose**: Project initialization and routing declaration.
 
-- [ ] T001 Define `/reports` route and reporting API endpoint in routes/web.php
+- [x] T001 Define `/reports` route and reporting API endpoint in routes/web.php
 
 ---
 
@@ -27,11 +27,11 @@
 
 **CRITICAL**: No user story work can begin until this phase is complete.
 
-- [ ] T002 Implement `ReportPolicy` checking if user is admin or tech-lead in app/Policies/ReportPolicy.php
-- [ ] T003 Create `GenerateReportRequest` validator for date input checks in app/Http/Requests/GenerateReportRequest.php
-- [ ] T004 Create `ReportService` class skeleton in app/Services/ReportService.php
-- [ ] T005 Create `ReportController` handling response logic in app/Http/Controllers/ReportController.php
-- [ ] T006 [P] Add Reports menu link inside sidebar navigation for authorized roles in resources/js/components/app-sidebar.tsx
+- [x] T002 Implement `ReportPolicy` checking if user is admin or tech-lead in app/Policies/ReportPolicy.php
+- [x] T003 Create `GenerateReportRequest` validator for date input checks in app/Http/Requests/GenerateReportRequest.php
+- [x] T004 Create `ReportService` class skeleton in app/Services/ReportService.php
+- [x] T005 Create `ReportController` handling response logic in app/Http/Controllers/ReportController.php
+- [x] T006 [P] Add Reports menu link inside sidebar navigation for authorized roles in resources/js/components/app-sidebar.tsx
 
 **Checkpoint**: Foundation ready - user story implementation can now begin.
 
@@ -45,16 +45,16 @@
 
 ### Tests for User Story 1
 
-- [ ] T007 [P] [US1] Write authorization tests and basic page render checks in tests/Feature/ReportControllerTest.php
-- [ ] T008 [P] [US1] Write database query unit tests for single period aggregations in tests/Feature/ReportControllerTest.php
+- [x] T007 [P] [US1] Write authorization tests and basic page render checks in tests/Feature/ReportControllerTest.php
+- [x] T008 [P] [US1] Write database query unit tests for single period aggregations in tests/Feature/ReportControllerTest.php
 
 ### Implementation for User Story 1
 
-- [ ] T009 [US1] Implement single-period aggregation queries for bugs, features, complaints, and developer velocity in app/Services/ReportService.php
-- [ ] T010 [US1] Update ReportController to invoke the service and return single-period props in app/Http/Controllers/ReportController.php
-- [ ] T011 [P] [US1] Create React reports dashboard index page skeleton in resources/js/pages/reports/index.tsx
-- [ ] T012 [US1] Implement period selection controls (Weekly, Monthly, Custom) in resources/js/pages/reports/index.tsx
-- [ ] T013 [US1] Render single-period summary cards and detailed breakdown tables in resources/js/pages/reports/index.tsx
+- [x] T009 [US1] Implement single-period aggregation queries for bugs, features, complaints, and developer velocity in app/Services/ReportService.php
+- [x] T010 [US1] Update ReportController to invoke the service and return single-period props in app/Http/Controllers/ReportController.php
+- [x] T011 [P] [US1] Create React reports dashboard index page skeleton in resources/js/pages/reports/index.tsx
+- [x] T012 [US1] Implement period selection controls (Weekly, Monthly, Custom) in resources/js/pages/reports/index.tsx
+- [x] T013 [US1] Render single-period summary cards and detailed breakdown tables in resources/js/pages/reports/index.tsx
 
 **Checkpoint**: User Story 1 is fully functional and testable independently.
 
@@ -68,15 +68,15 @@
 
 ### Tests for User Story 2
 
-- [ ] T014 [P] [US2] Write tests verifying comparison calculations and division-by-zero boundary safety in tests/Feature/ReportControllerTest.php
+- [x] T014 [P] [US2] Write tests verifying comparison calculations and division-by-zero boundary safety in tests/Feature/ReportControllerTest.php
 
 ### Implementation for User Story 2
 
-- [ ] T015 [US2] Implement Period A vs Period B delta percentage calculations and improvement logic in app/Services/ReportService.php
-- [ ] T016 [US2] Update ReportController to support comparison mode parameters in app/Http/Controllers/ReportController.php
-- [ ] T017 [US2] Add Period A and Period B selector inputs on page in resources/js/pages/reports/index.tsx
-- [ ] T018 [US2] Render side-by-side metrics widgets and color-coded delta badges in resources/js/pages/reports/index.tsx
-- [ ] T019 [US2] Render a table of all developers with their individual points comparison and deltas in resources/js/pages/reports/index.tsx
+- [x] T015 [US2] Implement Period A vs Period B delta percentage calculations and improvement logic in app/Services/ReportService.php
+- [x] T016 [US2] Update ReportController to support comparison mode parameters in app/Http/Controllers/ReportController.php
+- [x] T017 [US2] Add Period A and Period B selector inputs on page in resources/js/pages/reports/index.tsx
+- [x] T018 [US2] Render side-by-side metrics widgets and color-coded delta badges in resources/js/pages/reports/index.tsx
+- [x] T019 [US2] Render a table of all developers with their individual points comparison and deltas in resources/js/pages/reports/index.tsx
 
 **Checkpoint**: User Stories 1 and 2 work independently and together.
 
@@ -86,10 +86,10 @@
 
 **Purpose**: Quality checks, styling adjustments, and regression checks.
 
-- [ ] T020 [P] Run static analysis, linting, and formatting checks via composer and npm commands
-- [ ] T021 Run query performance inspections in app/Services/ReportService.php to ensure no N+1 query issues exist
-- [ ] T022 [P] Verify responsive card wrapping on mobile viewports in resources/js/pages/reports/index.tsx
-- [ ] T023 [P] Verify unauthorized developer access returns 403 Forbidden on the backend route
+- [x] T020 [P] Run static analysis, linting, and formatting checks via composer and npm commands
+- [x] T021 Run query performance inspections in app/Services/ReportService.php to ensure no N+1 query issues exist
+- [x] T022 [P] Verify responsive card wrapping on mobile viewports in resources/js/pages/reports/index.tsx
+- [x] T023 [P] Verify unauthorized developer access returns 403 Forbidden on the backend route
 
 ---
 
