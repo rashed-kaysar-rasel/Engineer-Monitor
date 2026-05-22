@@ -19,7 +19,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('feature_shipment_id')->constrained('feature_shipments')->cascadeOnDelete();
             $table->text('feature_description');
-            $table->vector('embedding', dimensions: 3072)->nullable();
+            if (DB::connection()->getDriverName() === 'pgsql') {
+                $table->vector('embedding', dimensions: 3072)->nullable();
+            } else {
+                $table->text('embedding')->nullable();
+            }
             $table->timestamps();
         });
     }

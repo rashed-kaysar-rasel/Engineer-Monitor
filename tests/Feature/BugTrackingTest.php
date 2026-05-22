@@ -19,6 +19,8 @@ class BugTrackingTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+        \App\Models\Role::factory()->create(['slug' => 'tech-lead']);
+        \App\Models\Role::factory()->create(['slug' => 'developer']);
         $this->techlead = User::factory()->create();
         $this->techlead->assignRole('tech-lead');
         $this->project = Project::factory()->create();
@@ -64,7 +66,7 @@ class BugTrackingTest extends TestCase
             'status' => 'pending',
         ]);
 
-        $developer = User::factory()->create();
+        $developer = \App\Models\Developer::factory()->create();
         $resolvedAt = now()->format('Y-m-d');
 
         $data = [
@@ -85,7 +87,7 @@ class BugTrackingTest extends TestCase
             'id' => $bug->id,
             'status' => 'resolved',
             'developer_id' => $developer->id,
-            'resolved_at' => $resolvedAt,
+            'resolved_at' => $resolvedAt . ' 00:00:00',
         ]);
     }
 

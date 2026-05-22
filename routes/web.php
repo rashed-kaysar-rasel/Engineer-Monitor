@@ -20,6 +20,8 @@ Route::middleware(['auth', 'verified', 'active-role'])->group(function () {
         ->only(['index', 'store', 'update', 'destroy']);
     Route::resource('bugs', \App\Http\Controllers\BugController::class)
         ->only(['index', 'store', 'update', 'destroy']);
+    Route::resource('client-complaints', \App\Http\Controllers\ClientComplaintController::class)
+        ->only(['index', 'store', 'update', 'destroy']);
 });
 
 require __DIR__.'/settings.php';

@@ -11,9 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('bug_embeddings', function (Blueprint $table) {
+        try {
+            Schema::ensureVectorExtensionExists();
+        } catch (\Exception $e) {
+            // Ignore extension check errors for database drivers (like sqlite)
+            // that do not support vector features natively.
+        }
+
+        Schema::create('client_complaint_embeddings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('bug_id')->unique()->constrained()->cascadeOnDelete();
+            $table->foreignId('client_complaint_id')->unique()->constrained()->cascadeOnDelete();
             if (DB::connection()->getDriverName() === 'pgsql') {
                 $table->vector('embedding', dimensions: 3072)->nullable();
             } else {
@@ -28,8 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('bug_embeddings', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('client_complaint_embeddings');
     }
 };
