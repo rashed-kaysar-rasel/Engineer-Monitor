@@ -42,10 +42,9 @@ interface BugsIndexProps {
     bugs: PaginatedData<Bug>;
     projects: Project[];
     developers: User[];
-    filters: any;
 }
 
-export default function BugsIndex({ bugs, projects, developers, filters }: BugsIndexProps) {
+export default function BugsIndex({ bugs, projects, developers }: BugsIndexProps) {
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
     const [editingBug, setEditingBug] = useState<Bug | null>(null);
 
@@ -139,7 +138,6 @@ export default function BugsIndex({ bugs, projects, developers, filters }: BugsI
             <EditBugModal
                 bug={editingBug}
                 developers={developers}
-                projects={projects}
                 open={!!editingBug}
                 onOpenChange={(open) => !open && setEditingBug(null)}
             />

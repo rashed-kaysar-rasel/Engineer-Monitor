@@ -19,11 +19,6 @@ interface User {
     name: string;
 }
 
-interface Project {
-    id: number;
-    title: string;
-}
-
 interface Bug {
     id: number;
     project_id: number;
@@ -37,14 +32,13 @@ interface Bug {
 
 interface EditBugModalProps {
     bug: Bug | null;
-    projects: Project[];
     developers: User[];
     open: boolean;
     onOpenChange: (open: boolean) => void;
 }
 
-export default function EditBugModal({ bug, projects, developers, open, onOpenChange }: EditBugModalProps) {
-    const { data, setData, put, processing, errors, reset } = useForm({
+export default function EditBugModal({ bug, developers, open, onOpenChange }: EditBugModalProps) {
+    const { data, setData, put, processing, errors } = useForm({
         project_id: '',
         impact: 'medium',
         status: 'pending',
@@ -66,11 +60,14 @@ export default function EditBugModal({ bug, projects, developers, open, onOpenCh
                 resolved_at: bug.resolved_at?.split('T')[0] || '',
             });
         }
-    }, [bug]);
+    }, [bug, setData]);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        if (!bug) return;
+
+        if (!bug) {
+return;
+}
 
         put(`/bugs/${bug.id}`, {
             onSuccess: () => {
