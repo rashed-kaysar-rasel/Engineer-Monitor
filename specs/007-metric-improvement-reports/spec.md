@@ -5,6 +5,16 @@
 **Status**: Draft  
 **Input**: User description: "Now The tech-lead will be able to generate reports comparing key metrics (bugs, features, client complaints, team velocity) over specific time periods (weekly, monthly, custom date ranges). Bug Counts: Number of bugs by project, severity, and status. Features Shipped: Number of features shipped by leadership and by a developer. Client Complaints: Number of client complaints by severity. Developer Velocity: total points(t-shirt size) features completed by a developer. Improvement Reports: Functionality: Display how the team has improved over selected time periods. For example, compare bug counts between two months, showing whether the number of bugs has decreased over time. Key Metrics: Decrease in bugs, Increase in features shipped, Improved team (all developer) velocity, Improved a single developer velocity."
 
+## Clarifications
+
+### Session 2026-05-22
+
+- Q: When comparing two periods (Period A vs Period B), how should the baseline be determined for improvement calculations? → A: Enforce chronological order (Period A is older, Period B is newer).
+- Q: Where should the Reports menu item be placed in the sidebar menu? → A: Grouped with the restricted items (Developers, Projects, Shipments, Bugs) visible only to Admins/Tech-leads.
+- Q: How should individual developer velocities be presented in the comparison view? → A: A comprehensive table/grid listing all developers and their comparison deltas.
+- Q: How should the "Features Shipped by leadership" metric be grouped and aggregated? → A: Broken down by the individual user/approver who shipped them.
+- Q: Should the generated reports support filtering the aggregated metrics by project? → A: Global metrics only (no project filter dropdown).
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Metrics Overview and Period Selection (Priority: P1)
@@ -59,14 +69,14 @@ As a Tech-lead or Admin, I want to compare the key metrics of two distinct time 
 - **FR-002**: Access to `/reports` and all report generation API endpoints MUST be restricted to `admin` and `tech-lead` roles.
 - **FR-003**: The system MUST support metric aggregation for:
   - **Bug Counts**: Grouped by project, impact (`low`, `medium`, `high`), and status.
-  - **Features Shipped**: Grouped by approver/leadership and by developer.
+  - **Features Shipped**: Grouped by approver/leadership (individual user breakdown) and by developer.
   - **Client Complaints**: Grouped by impact level (`low`, `medium`, `high`).
   - **Developer Velocity**: Sum of `points` of completed feature shipments for each developer.
-- **FR-004**: The system MUST allow comparing two distinct date ranges (Period A vs. Period B) and calculate the difference:
+- **FR-004**: The system MUST allow comparing two distinct date ranges (where Period A is chronologically older than Period B) and calculate the difference:
   - **Bugs**: Improvement = (Period B count - Period A count) / Period A count is negative (decrease in bugs).
   - **Features Shipped**: Improvement = increase in total shipments.
   - **Team Velocity**: Improvement = increase in sum of all points.
-  - **Single Developer Velocity**: Improvement = increase in points for a selected developer.
+  - **Single Developer Velocity**: Table/list of all developers showing their individual Period A velocity, Period B velocity, and calculated difference.
 - **FR-005**: All reporting queries MUST be eager-loaded and optimized to avoid N+1 queries.
 - **FR-006**: The interface MUST adapt to both desktop and mobile viewports, using a grid/flex layout and clean shadcn/tailwind cards.
 
