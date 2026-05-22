@@ -22,7 +22,7 @@ class GenerateReportRequest extends FormRequest
     {
         return [
             'mode' => 'nullable|in:single,compare',
-            'period' => 'nullable|in:weekly,monthly,custom',
+            'period' => 'nullable|in:weekly,monthly,quarterly,custom',
             'start_date' => 'nullable|date|required_if:period,custom',
             'end_date' => 'nullable|date|after_or_equal:start_date|required_if:period,custom',
             'compare_start_date' => 'nullable|date',

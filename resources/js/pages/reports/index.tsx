@@ -74,7 +74,7 @@ interface VelocityCompare {
 
 interface ReportProps {
     mode: 'single' | 'compare';
-    period: 'weekly' | 'monthly' | 'custom';
+    period: 'weekly' | 'monthly' | 'quarterly' | 'custom';
     dates: PeriodDates;
     metrics: {
         bugs: MetricCompare<BugsBreakdown>;
@@ -86,7 +86,7 @@ interface ReportProps {
 
 export default function ReportsIndex({ mode: initialMode, period: initialPeriod, dates, metrics }: ReportProps) {
     const [mode, setMode] = useState<'single' | 'compare'>(initialMode);
-    const [period, setPeriod] = useState<'weekly' | 'monthly' | 'custom'>(initialPeriod);
+    const [period, setPeriod] = useState<'weekly' | 'monthly' | 'quarterly' | 'custom'>(initialPeriod);
 
     // Date range inputs
     const [startDate, setStartDate] = useState(dates.period_b.start);
@@ -187,13 +187,14 @@ export default function ReportsIndex({ mode: initialMode, period: initialPeriod,
                             {/* Preset Period */}
                             <div className="space-y-2">
                                 <label className="text-xs font-semibold text-muted-foreground">Preset Period</label>
-                                <Select value={period} onValueChange={(val: 'weekly' | 'monthly' | 'custom') => setPeriod(val)}>
+                                <Select value={period} onValueChange={(val: 'weekly' | 'monthly' | 'quarterly' | 'custom') => setPeriod(val)}>
                                     <SelectTrigger className="w-full">
                                         <SelectValue placeholder="Select preset" />
                                     </SelectTrigger>
                                     <SelectContent>
                                         <SelectItem value="weekly">Weekly Range</SelectItem>
                                         <SelectItem value="monthly">Monthly Range</SelectItem>
+                                        <SelectItem value="quarterly">Quarterly Range</SelectItem>
                                         <SelectItem value="custom">Custom Date Range</SelectItem>
                                     </SelectContent>
                                 </Select>

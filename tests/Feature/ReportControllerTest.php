@@ -183,4 +183,21 @@ class ReportControllerTest extends TestCase
             $this->assertTrue($metrics['velocity']['team']['improved']);
         });
     }
+
+    public function test_reports_accepts_quarterly_period()
+    {
+        $response = $this->actingAs($this->techlead)
+            ->get(route('reports', [
+                'mode' => 'single',
+                'period' => 'quarterly',
+            ]));
+
+        $response->assertStatus(200);
+        $response->assertInertia(function ($page) {
+            $this->assertEquals('quarterly', $page->toArray()['props']['period']);
+            $dates = $page->toArray()['props']['dates'];
+            $this->assertNotNull($dates['period_b']['start']);
+            $this->assertNotNull($dates['period_b']['end']);
+        });
+    }
 }
