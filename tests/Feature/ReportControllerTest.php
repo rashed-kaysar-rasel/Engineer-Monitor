@@ -186,6 +186,8 @@ class ReportControllerTest extends TestCase
 
     public function test_reports_accepts_quarterly_period()
     {
+        \Carbon\Carbon::setTestNow('2026-05-22');
+
         $response = $this->actingAs($this->techlead)
             ->get(route('reports', [
                 'mode' => 'single',
@@ -196,8 +198,16 @@ class ReportControllerTest extends TestCase
         $response->assertInertia(function ($page) {
             $this->assertEquals('quarterly', $page->toArray()['props']['period']);
             $dates = $page->toArray()['props']['dates'];
-            $this->assertNotNull($dates['period_b']['start']);
-            $this->assertNotNull($dates['period_b']['end']);
+            
+            // May 22, 2026 is in Q2 (Apr 1 to Jun 30)
+            $this->assertEquals('2026-04-01', $dates['period_b']['start']);
+            $this->assertEquals('2026-06-30', $dates['period_b']['end']);
+            
+            // Previous quarter (Q1) is Jan 1 to Mar 31
+            $this->assertEquals('2026-01-01', $dates['period_a']['start']);
+            $this->assertEquals('2026-03-31', $dates['period_a']['end']);
         });
+
+        \Carbon\Carbon::setTestNow();
     }
 }
