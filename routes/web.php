@@ -22,6 +22,7 @@ Route::middleware(['auth', 'verified', 'active-role'])->group(function () {
         ->only(['index', 'store', 'update', 'destroy']);
     Route::resource('client-complaints', \App\Http\Controllers\ClientComplaintController::class)
         ->only(['index', 'store', 'update', 'destroy']);
+    Route::get('reports', \App\Http\Controllers\ReportController::class)->name('reports');
 });
 
 require __DIR__.'/settings.php';

@@ -1,5 +1,5 @@
 import { Link, usePage } from '@inertiajs/react';
-import { BookOpen, Briefcase, FolderGit2, LayoutGrid, Users, Rocket, Bug, MessageSquare } from 'lucide-react';
+import { BookOpen, Briefcase, FolderGit2, LayoutGrid, Users, Rocket, Bug, MessageSquare, BarChart3 } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
@@ -68,6 +68,11 @@ export function AppSidebar() {
                       title: 'Bugs',
                       href: '/bugs',
                       icon: Bug,
+                  },
+                  {
+                      title: 'Reports',
+                      href: '/reports',
+                      icon: BarChart3,
                   },
               ]
             : []),

@@ -51,6 +51,7 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(\App\Models\ClientComplaint::class, \App\Policies\ClientComplaintPolicy::class);
         Gate::define('access-admin-area', fn (User $user): bool => $user->hasRole('admin'));
         Gate::define('access-tech-lead-area', fn (User $user): bool => $user->hasRole('tech-lead'));
+        Gate::define('view-reports', fn (User $user): bool => (new \App\Policies\ReportPolicy)->viewAny($user));
 
         Password::defaults(fn (): ?Password => app()->isProduction()
             ? Password::min(12)
