@@ -29,7 +29,6 @@ class BugController extends Controller
 
         return Inertia::render('bugs/index', [
             'bugs' => $bugs,
-            'projects' => Project::all(['id', 'title']),
             'developers' => \App\Models\Developer::all(['id', 'name']),
             'filters' => $request->only(['project_id', 'impact', 'status']),
         ]);
